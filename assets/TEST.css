@@ -505,8 +505,8 @@
 .test-popup__color-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  border: 0.5px solid #1a1a1a;
-  background: #2b2b2b;
+  border: 0.5px solid var(--test-black);
+  background: var(--test-white);
 }
 
 .test-popup__color {
@@ -516,9 +516,9 @@
   min-height: 40px;
   padding: 0 12px 0 0;
   border: 0;
-  border-right: 0.5px solid #1a1a1a;
-  background: #2b2b2b;
-  color: #9a9a9a;
+  border-right: 0.5px solid var(--test-black);
+  background: var(--test-white);
+  color: var(--test-black);
   font-family: var(--test-jost);
   font-size: 16px;
   text-align: left;
@@ -542,7 +542,6 @@
   align-self: stretch;
   flex-shrink: 0;
   background: var(--swatch, #000);
-  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.25);
 }
 
 .test-popup__color-label {
