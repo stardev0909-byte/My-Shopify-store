@@ -366,15 +366,21 @@
     },
     "test_hero_Ufb6fn": {
       "type": "TEST-HERO",
+      "blocks": {
+        "heading_twbxk3": {
+          "type": "heading",
+          "settings": {
+            "text": "The Gift Guide"
+          }
+        }
+      },
+      "block_order": [
+        "heading_twbxk3"
+      ],
       "name": "TEST Hero",
       "settings": {
         "image_desktop": "shopify://shop_images/Group_1000008197.png",
         "image_mobile": "shopify://shop_images/Frame.png",
-        "heading": "The Gift Guide",
-        "description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
-        "description_mobile": "Discover Joy: Your Ultimate Holiday Gift Destination.",
-        "shop_now_label": "SHOP NOW",
-        "shop_now_link": "",
         "strip_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
         "strip_text_mobile": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
       }
