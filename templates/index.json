@@ -368,10 +368,8 @@
       "type": "TEST-HERO",
       "name": "TEST Hero",
       "settings": {
-        "logo_text": "TISSO VISON",
-        "announcement": "Find the ideal gift for your loved ones.",
-        "choose_gift_label": "CHOOSE GIFT",
-        "choose_gift_link": "",
+        "image_desktop": "shopify://shop_images/Group_1000008197.png",
+        "image_mobile": "shopify://shop_images/Frame.png",
         "heading": "The Gift Guide",
         "description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
         "description_mobile": "Discover Joy: Your Ultimate Holiday Gift Destination.",
