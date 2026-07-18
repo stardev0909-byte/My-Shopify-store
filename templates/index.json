@@ -438,6 +438,66 @@
     "test_vison_nteVgd": {
       "type": "TEST-VISON",
       "blocks": {
+        "test_product_twKtWA": {
+          "type": "test-product",
+          "name": "Product",
+          "settings": {
+            "product": "black-leather-bag",
+            "hotspot_top_desktop": 10,
+            "hotspot_left_desktop": 70,
+            "hotspot_top_mobile": 10,
+            "hotspot_left_mobile": 70
+          },
+          "blocks": {}
+        },
+        "test_product_dnDp8A": {
+          "type": "test-product",
+          "name": "Product",
+          "settings": {
+            "product": "classic-leather-jacket",
+            "hotspot_top_desktop": 10,
+            "hotspot_left_desktop": 70,
+            "hotspot_top_mobile": 10,
+            "hotspot_left_mobile": 70
+          },
+          "blocks": {}
+        },
+        "test_product_WDkkUF": {
+          "type": "test-product",
+          "name": "Product",
+          "settings": {
+            "product": "classic-leather-jacket",
+            "hotspot_top_desktop": 10,
+            "hotspot_left_desktop": 70,
+            "hotspot_top_mobile": 10,
+            "hotspot_left_mobile": 70
+          },
+          "blocks": {}
+        },
+        "test_product_xet7TW": {
+          "type": "test-product",
+          "name": "Product",
+          "settings": {
+            "product": "classic-varsity-top",
+            "hotspot_top_desktop": 10,
+            "hotspot_left_desktop": 70,
+            "hotspot_top_mobile": 10,
+            "hotspot_left_mobile": 70
+          },
+          "blocks": {}
+        },
+        "test_product_NbXXn4": {
+          "type": "test-product",
+          "name": "Product",
+          "settings": {
+            "product": "dark-denim-top",
+            "hotspot_top_desktop": 10,
+            "hotspot_left_desktop": 70,
+            "hotspot_top_mobile": 10,
+            "hotspot_left_mobile": 70
+          },
+          "blocks": {}
+        },
         "test_product_yb4MUp": {
           "type": "test-product",
           "name": "Product",
@@ -452,6 +512,11 @@
         }
       },
       "block_order": [
+        "test_product_twKtWA",
+        "test_product_dnDp8A",
+        "test_product_WDkkUF",
+        "test_product_xet7TW",
+        "test_product_NbXXn4",
         "test_product_yb4MUp"
       ],
       "name": "TEST Vison",
