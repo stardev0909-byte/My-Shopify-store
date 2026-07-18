@@ -31,6 +31,35 @@
       .some((option) => option.toLowerCase() === value.toLowerCase());
   }
 
+  function isColorOption(name) {
+    return /colou?r/i.test(name || '');
+  }
+
+  function isSizeOption(name) {
+    return /size|taille/i.test(name || '');
+  }
+
+  function colorSwatch(value) {
+    const map = {
+      black: '#000000',
+      white: '#ffffff',
+      blue: '#2f5bff',
+      red: '#d32f2f',
+      green: '#2e7d32',
+      yellow: '#fbc02d',
+      brown: '#795548',
+      beige: '#d7c4a3',
+      grey: '#9e9e9e',
+      gray: '#9e9e9e',
+      navy: '#1a237e',
+      pink: '#e91e63',
+      orange: '#ef6c00',
+      purple: '#7b1fa2',
+    };
+    const key = String(value || '').toLowerCase().trim();
+    return map[key] || key;
+  }
+
   async function cartAdd(items) {
     const root = window.Shopify?.routes?.root || '/';
     const response = await fetch(`${root}cart/add.js`, {
@@ -100,6 +129,7 @@
       });
 
       this.addEventListener('click', this.onClick.bind(this));
+      this.addEventListener('change', this.onChange.bind(this));
       document.addEventListener('keydown', this.onKeydown);
     }
 
@@ -109,6 +139,13 @@
 
     onKeydown(event) {
       if (event.key === 'Escape' && this.overlay?.hidden === false) this.closePopup();
+    }
+
+    onChange(event) {
+      const select = event.target.closest('[data-test-option-select]');
+      if (!select) return;
+      this.selections[select.dataset.optionName] = select.value;
+      this.updatePrice();
     }
 
     onClick(event) {
@@ -145,6 +182,10 @@
       this.activeHandle = handle;
       this.selections = {};
       product.options.forEach((optionName, index) => {
+        if (isSizeOption(optionName)) {
+          this.selections[optionName] = '';
+          return;
+        }
         const firstAvailable = product.variants.find((variant) => variant.available);
         const source = firstAvailable || product.variants[0];
         this.selections[optionName] = source[`option${index + 1}`];
@@ -169,6 +210,75 @@
       document.body.classList.remove('test-popup-open');
     }
 
+    renderOptionGroup(optionName, optionIndex, values) {
+      if (isColorOption(optionName)) {
+        const buttons = values
+          .map((value) => {
+            const selected = this.selections[optionName] === value;
+            const swatch = colorSwatch(value);
+            return `
+              <button
+                type="button"
+                class="test-popup__color${selected ? ' is-selected' : ''}"
+                data-option-name="${optionName}"
+                data-test-option-value="${value}"
+              >
+                <span class="test-popup__color-swatch" style="background:${swatch}"></span>
+                <span class="test-popup__color-label">${value}</span>
+              </button>
+            `;
+          })
+          .join('');
+
+        return `
+          <div class="test-popup__option-group">
+            <p class="test-popup__option-label">${optionName}</p>
+            <div class="test-popup__color-list">${buttons}</div>
+          </div>
+        `;
+      }
+
+      if (isSizeOption(optionName)) {
+        const options = values
+          .map((value) => {
+            const selected = this.selections[optionName] === value ? ' selected' : '';
+            return `<option value="${value}"${selected}>${value}</option>`;
+          })
+          .join('');
+
+        return `
+          <div class="test-popup__option-group">
+            <p class="test-popup__option-label">${optionName}</p>
+            <div class="test-popup__select-wrap">
+              <select
+                class="test-popup__select"
+                data-option-name="${optionName}"
+                data-test-option-select
+                aria-label="${optionName}"
+              >
+                <option value="" disabled ${this.selections[optionName] ? '' : 'selected'}>Choose your size</option>
+                ${options}
+              </select>
+            </div>
+          </div>
+        `;
+      }
+
+      const buttons = values
+        .map((value) => {
+          const selected = this.selections[optionName] === value;
+          return `<button type="button" class="test-popup__option${selected ? ' is-selected' : ''}" data-option-name="${optionName}" data-test-option-value="${value}">${value}</button>`;
+        })
+        .join('');
+
+      return `
+        <div class="test-popup__option-group">
+          <p class="test-popup__option-label">${optionName}</p>
+          <div class="test-popup__option-list">${buttons}</div>
+        </div>
+      `;
+    }
+
     renderOptions() {
       const product = this.products[this.activeHandle];
       if (!product || !this.optionsEl) return;
@@ -178,24 +288,23 @@
         return;
       }
 
-      this.optionsEl.innerHTML = product.options
-        .map((optionName, optionIndex) => {
+      const ordered = [...product.options.keys()].sort((a, b) => {
+        const aName = product.options[a];
+        const bName = product.options[b];
+        if (isColorOption(aName) && !isColorOption(bName)) return -1;
+        if (!isColorOption(aName) && isColorOption(bName)) return 1;
+        if (isSizeOption(aName) && !isSizeOption(bName)) return 1;
+        if (!isSizeOption(aName) && isSizeOption(bName)) return -1;
+        return a - b;
+      });
+
+      this.optionsEl.innerHTML = ordered
+        .map((optionIndex) => {
+          const optionName = product.options[optionIndex];
           const values = [
             ...new Set(product.variants.map((variant) => variant[`option${optionIndex + 1}`]).filter(Boolean)),
           ];
-          const buttons = values
-            .map((value) => {
-              const selected = this.selections[optionName] === value;
-              return `<button type="button" class="test-popup__option${selected ? ' is-selected' : ''}" data-option-name="${optionName}" data-test-option-value="${value}">${value}</button>`;
-            })
-            .join('');
-
-          return `
-            <div class="test-popup__option-group">
-              <p class="test-popup__option-label">${optionName}</p>
-              <div class="test-popup__option-list">${buttons}</div>
-            </div>
-          `;
+          return this.renderOptionGroup(optionName, optionIndex, values);
         })
         .join('');
     }
@@ -203,15 +312,30 @@
     updatePrice() {
       const product = this.products[this.activeHandle];
       if (!product) return;
+
+      const sizeMissing = product.options.some(
+        (optionName) => isSizeOption(optionName) && !this.selections[optionName]
+      );
       const variant = findVariant(product, this.selections) || product.variants[0];
       this.priceEl.textContent = money(variant.price, this.moneyFormat);
-      this.addButton.disabled = !variant.available;
-      this.addButton.querySelector('span').textContent = variant.available ? 'ADD TO CART' : 'SOLD OUT';
+
+      const available = !sizeMissing && variant?.available;
+      this.addButton.disabled = !available;
+      const label = this.addButton.querySelector('[data-test-add-label]') || this.addButton.querySelector('span');
+      if (label) label.textContent = available ? 'ADD TO CART' : sizeMissing ? 'ADD TO CART' : 'SOLD OUT';
     }
 
     async addToCart() {
       const product = this.products[this.activeHandle];
       if (!product) return;
+
+      const sizeMissing = product.options.some(
+        (optionName) => isSizeOption(optionName) && !this.selections[optionName]
+      );
+      if (sizeMissing) {
+        this.statusEl.textContent = 'Please choose your size.';
+        return;
+      }
 
       const variant = findVariant(product, this.selections);
       if (!variant?.available) {
