@@ -2,13 +2,6 @@
 
 <article class="test-vison__item" {{ block.shopify_attributes }}>
   {% if product != blank %}
-    {% liquid
-      assign card_image = block.settings.image
-      if card_image == blank
-        assign card_image = product.featured_image
-      endif
-    %}
-
     <script type="application/json" data-test-product>
       {
         "id": {{ product.id | json }},
@@ -39,9 +32,9 @@
     </script>
 
     <div class="test-vison__media">
-      {% if card_image != blank %}
+      {% if product.featured_image != blank %}
         {{
-          card_image
+          product.featured_image
           | image_url: width: 1200
           | image_tag:
             loading: 'lazy',
@@ -56,7 +49,12 @@
       <button
         type="button"
         class="test-vison__hotspot"
-        style="--hotspot-top: {{ block.settings.hotspot_top }}%; --hotspot-left: {{ block.settings.hotspot_left }}%;"
+        style="
+          --hotspot-top-desktop: {{ block.settings.hotspot_top_desktop }}%;
+          --hotspot-left-desktop: {{ block.settings.hotspot_left_desktop }}%;
+          --hotspot-top-mobile: {{ block.settings.hotspot_top_mobile }}%;
+          --hotspot-left-mobile: {{ block.settings.hotspot_left_mobile }}%;
+        "
         data-test-hotspot
         data-product-handle="{{ product.handle }}"
         aria-label="Quick view {{ product.title }}"
@@ -83,29 +81,51 @@
       "label": "Product"
     },
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Custom lifestyle image",
-      "info": "Optional. Uses the product image if empty."
+      "type": "header",
+      "content": "Desktop hotspot"
     },
     {
       "type": "range",
-      "id": "hotspot_top",
+      "id": "hotspot_top_desktop",
       "min": 0,
       "max": 100,
       "step": 1,
       "unit": "%",
-      "label": "Hotspot top position",
+      "label": "Top position",
       "default": 10
     },
     {
       "type": "range",
-      "id": "hotspot_left",
+      "id": "hotspot_left_desktop",
       "min": 0,
       "max": 100,
       "step": 1,
       "unit": "%",
-      "label": "Hotspot left position",
+      "label": "Left position",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Mobile hotspot"
+    },
+    {
+      "type": "range",
+      "id": "hotspot_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Top position",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "hotspot_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Left position",
       "default": 70
     }
   ],

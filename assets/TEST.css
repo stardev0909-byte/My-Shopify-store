@@ -523,8 +523,8 @@
 
 .test-vison__hotspot {
   position: absolute;
-  top: var(--hotspot-top, 10%);
-  left: var(--hotspot-left, 70%);
+  top: var(--hotspot-top-mobile, 10%);
+  left: var(--hotspot-left-mobile, 70%);
   width: 16px;
   height: 16px;
   display: grid;
@@ -869,6 +869,8 @@ body.test-popup-open {
   }
 
   .test-vison__hotspot {
+    top: var(--hotspot-top-desktop, 10%);
+    left: var(--hotspot-left-desktop, 70%);
     width: 22px;
     height: 22px;
     font-size: 18px;
