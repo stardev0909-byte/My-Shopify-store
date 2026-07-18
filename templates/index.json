@@ -441,8 +441,8 @@
           "name": "Product",
           "settings": {
             "product": "blue-silk-tuxedo",
-            "hotspot_top_desktop": 10,
-            "hotspot_left_desktop": 70,
+            "hotspot_top_desktop": 53,
+            "hotspot_left_desktop": 83,
             "hotspot_top_mobile": 10,
             "hotspot_left_mobile": 70
           },
