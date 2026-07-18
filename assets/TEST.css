@@ -338,18 +338,6 @@
   flex-shrink: 0;
 }
 
-.test-btn__arrow::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 7px;
-  height: 7px;
-  border-right: 1px solid currentColor;
-  border-top: 1px solid currentColor;
-  transform: translateY(-50%) rotate(45deg);
-}
-
 .test-btn--black {
   background: var(--test-black);
   color: var(--test-white);
