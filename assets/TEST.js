@@ -129,7 +129,6 @@
       });
 
       this.addEventListener('click', this.onClick.bind(this));
-      this.addEventListener('change', this.onChange.bind(this));
       document.addEventListener('keydown', this.onKeydown);
     }
 
@@ -138,14 +137,14 @@
     }
 
     onKeydown(event) {
-      if (event.key === 'Escape' && this.overlay?.hidden === false) this.closePopup();
-    }
-
-    onChange(event) {
-      const select = event.target.closest('[data-test-option-select]');
-      if (!select) return;
-      this.selections[select.dataset.optionName] = select.value;
-      this.updatePrice();
+      if (event.key === 'Escape') {
+        const openSelect = this.querySelector('.test-popup__dropdown.is-open');
+        if (openSelect) {
+          openSelect.classList.remove('is-open');
+          return;
+        }
+        if (this.overlay?.hidden === false) this.closePopup();
+      }
     }
 
     onClick(event) {
@@ -161,12 +160,37 @@
         return;
       }
 
+      const dropdownTrigger = event.target.closest('[data-test-dropdown-trigger]');
+      if (dropdownTrigger) {
+        event.preventDefault();
+        const dropdown = dropdownTrigger.closest('[data-test-dropdown]');
+        const wasOpen = dropdown.classList.contains('is-open');
+        this.querySelectorAll('[data-test-dropdown].is-open').forEach((el) => el.classList.remove('is-open'));
+        if (!wasOpen) dropdown.classList.add('is-open');
+        return;
+      }
+
+      const dropdownOption = event.target.closest('[data-test-dropdown-option]');
+      if (dropdownOption) {
+        event.preventDefault();
+        const dropdown = dropdownOption.closest('[data-test-dropdown]');
+        this.selections[dropdownOption.dataset.optionName] = dropdownOption.dataset.testOptionValue;
+        dropdown.classList.remove('is-open');
+        this.renderOptions();
+        this.updatePrice();
+        return;
+      }
+
       const optionButton = event.target.closest('[data-test-option-value]');
       if (optionButton) {
         this.selections[optionButton.dataset.optionName] = optionButton.dataset.testOptionValue;
         this.renderOptions();
         this.updatePrice();
         return;
+      }
+
+      if (!event.target.closest('[data-test-dropdown]')) {
+        this.querySelectorAll('[data-test-dropdown].is-open').forEach((el) => el.classList.remove('is-open'));
       }
 
       if (event.target.closest('[data-test-add-to-cart]')) {
@@ -223,7 +247,7 @@
                 data-option-name="${optionName}"
                 data-test-option-value="${value}"
               >
-                <span class="test-popup__color-swatch" style="background:${swatch}"></span>
+                <span class="test-popup__color-swatch" style="--swatch:${swatch}"></span>
                 <span class="test-popup__color-label">${value}</span>
               </button>
             `;
@@ -239,26 +263,34 @@
       }
 
       if (isSizeOption(optionName)) {
-        const options = values
+        const selected = this.selections[optionName];
+        const list = values
           .map((value) => {
-            const selected = this.selections[optionName] === value ? ' selected' : '';
-            return `<option value="${value}"${selected}>${value}</option>`;
+            const isActive = selected === value;
+            return `
+              <button
+                type="button"
+                class="test-popup__dropdown-option${isActive ? ' is-selected' : ''}"
+                data-option-name="${optionName}"
+                data-test-dropdown-option
+                data-test-option-value="${value}"
+              >${value}</button>
+            `;
           })
           .join('');
 
         return `
           <div class="test-popup__option-group">
             <p class="test-popup__option-label">${optionName}</p>
-            <div class="test-popup__select-wrap">
-              <select
-                class="test-popup__select"
-                data-option-name="${optionName}"
-                data-test-option-select
-                aria-label="${optionName}"
-              >
-                <option value="" disabled ${this.selections[optionName] ? '' : 'selected'}>Choose your size</option>
-                ${options}
-              </select>
+            <div class="test-popup__dropdown" data-test-dropdown data-option-name="${optionName}">
+              <button type="button" class="test-popup__dropdown-trigger${selected ? ' has-value' : ''}" data-test-dropdown-trigger aria-haspopup="listbox">
+                <span class="test-popup__dropdown-value${selected ? ' has-value' : ''}">
+                  ${selected || 'Choose your size'}
+                </span>
+                <span class="test-popup__dropdown-divider" aria-hidden="true"></span>
+                <span class="test-popup__dropdown-chevron" aria-hidden="true"></span>
+              </button>
+              <div class="test-popup__dropdown-menu" role="listbox">${list}</div>
             </div>
           </div>
         `;

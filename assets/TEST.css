@@ -505,7 +505,8 @@
 .test-popup__color-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  border: 0.5px solid var(--test-black);
+  border: 0.5px solid #1a1a1a;
+  background: #2b2b2b;
 }
 
 .test-popup__color {
@@ -513,78 +514,141 @@
   align-items: center;
   gap: 10px;
   min-height: 40px;
-  padding: 0 10px 0 0;
+  padding: 0 12px 0 0;
   border: 0;
-  border-right: 0.5px solid var(--test-black);
-  background: var(--test-white);
-  color: var(--test-black);
+  border-right: 0.5px solid #1a1a1a;
+  background: #2b2b2b;
+  color: #9a9a9a;
   font-family: var(--test-jost);
   font-size: 16px;
   text-align: left;
   text-transform: capitalize;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .test-popup__color:last-child {
   border-right: 0;
 }
 
+.test-popup__color:hover,
 .test-popup__color.is-selected {
-  box-shadow: inset 0 0 0 1px var(--test-black);
+  background: #000;
+  color: #fff;
 }
 
 .test-popup__color-swatch {
-  width: 5px;
+  width: 4px;
   align-self: stretch;
   flex-shrink: 0;
+  background: var(--swatch, #000);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.25);
 }
 
 .test-popup__color-label {
-  padding: 8px 0;
+  padding: 10px 0;
 }
 
-.test-popup__select-wrap {
+.test-popup__dropdown {
   position: relative;
-  border: 0.5px solid var(--test-black);
-  background: var(--test-white);
 }
 
-.test-popup__select-wrap::after {
-  content: '';
+.test-popup__dropdown-trigger {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 34px 0 0;
+  border: 0.5px solid #1a1a1a;
+  background: #2b2b2b;
+  color: #9a9a9a;
+  font-family: var(--test-jost);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.test-popup__dropdown-trigger.has-value {
+  background: #fff;
+  color: #000;
+}
+
+.test-popup__dropdown-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 12px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.test-popup__dropdown-value:not(.has-value) {
+  text-transform: none;
+}
+
+.test-popup__dropdown-divider {
   position: absolute;
   top: 0;
   right: 34px;
   bottom: 0;
   width: 0.5px;
-  background: var(--test-black);
-  pointer-events: none;
+  background: #1a1a1a;
 }
 
-.test-popup__select-wrap::before {
-  content: '';
+.test-popup__dropdown-chevron {
   position: absolute;
   top: 50%;
   right: 12px;
   width: 7px;
   height: 7px;
-  border-right: 1px solid var(--test-black);
-  border-bottom: 1px solid var(--test-black);
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  color: #000;
   transform: translateY(-70%) rotate(45deg);
-  pointer-events: none;
+  transition: transform 0.2s ease;
 }
 
-.test-popup__select {
+.test-popup__dropdown.is-open .test-popup__dropdown-chevron {
+  transform: translateY(-20%) rotate(225deg);
+}
+
+.test-popup__dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% - 0.5px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background: #fff;
+  border: 0.5px solid #1a1a1a;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+}
+
+.test-popup__dropdown.is-open .test-popup__dropdown-menu {
+  display: block;
+}
+
+.test-popup__dropdown-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  min-height: 40px;
-  padding: 10px 44px 10px 14px;
+  min-height: 36px;
+  padding: 8px 12px;
   border: 0;
-  background: transparent;
-  color: var(--test-black);
+  background: #fff;
+  color: #000;
   font-family: var(--test-jost);
   font-size: 16px;
-  line-height: 1;
-  appearance: none;
+  text-transform: uppercase;
+  text-align: center;
   cursor: pointer;
+}
+
+.test-popup__dropdown-option:hover,
+.test-popup__dropdown-option.is-selected {
+  background: #000;
+  color: #fff;
 }
 
 .test-popup__option-list {
@@ -602,15 +666,17 @@
   color: var(--test-black);
   font-family: var(--test-jost);
   font-size: 16px;
-  text-align: left;
-  text-transform: capitalize;
+  text-align: center;
+  text-transform: uppercase;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .test-popup__option:last-child {
   border-right: 0;
 }
 
+.test-popup__option:hover,
 .test-popup__option.is-selected {
   background: var(--test-black);
   color: var(--test-white);
