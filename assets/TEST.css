@@ -237,6 +237,7 @@
   align-items: center;
   text-align: center;
   padding: 49px 16px 84px;
+
 }
 
 .test-hero__heading {
@@ -401,6 +402,7 @@
     text-align: left;
     max-width: 560px;
     padding: 425px 0 55px 67px;
+    row-gap: 50px;
   }
 
   .test-hero__heading {
