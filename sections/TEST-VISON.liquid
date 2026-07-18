@@ -93,9 +93,7 @@
 
   <div class="test-popup-overlay" data-test-popup-overlay hidden>
     <div class="test-popup" data-test-popup role="dialog" aria-modal="true" aria-label="Product quick view">
-      <button type="button" class="test-popup__close" data-test-close aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
+      <button type="button" class="test-popup__close" data-test-close aria-label="Close"></button>
 
       <div class="test-popup__top">
         <div class="test-popup__image-wrap">
@@ -111,7 +109,7 @@
       <div class="test-popup__options" data-test-popup-options></div>
 
       <button type="button" class="test-popup__add test-btn test-btn--black" data-test-add-to-cart>
-        <span>ADD TO CART</span>
+        <span data-test-add-label>ADD TO CART</span>
         <span class="test-btn__arrow" aria-hidden="true"></span>
       </button>
       <p class="test-popup__status" data-test-popup-status></p>
@@ -175,6 +173,14 @@
   "presets": [
     {
       "name": "TEST Vison",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
     }
   ]
 }
