@@ -112,7 +112,7 @@
 
 .test-header__announcement--desktop,
 .test-header a.test-header__choose-gift--desktop {
-  display: none !important;
+  display: none;
 }
 
 .test-header__panel {
@@ -174,7 +174,7 @@
   }
 
   .test-header__announcement--desktop {
-    display: block !important;
+    display: block;
     margin: 0;
     font-size: 16px;
     line-height: 1;
