@@ -20,11 +20,16 @@
 
   <div class="test-popup-overlay" data-test-popup-overlay hidden>
     <div class="test-popup" data-test-popup role="dialog" aria-modal="true" aria-label="Product quick view">
-      <button type="button" class="test-popup__close" data-test-close aria-label="Close"></button>
+      <button type="button" class="test-popup__close" data-test-close aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+          <path d="M4.24219 4.24285L12.7275 12.7281" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+          <path d="M4.24219 12.7277L12.7275 4.24243" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+        </svg>
+      </button>
 
       <div class="test-popup__top">
         <div class="test-popup__image-wrap">
-          <img data-test-popup-image src="" alt="" width="" height="">
+          <img data-test-popup-image src="" alt="">
         </div>
         <div class="test-popup__info">
           <h3 class="test-popup__title" data-test-popup-title></h3>
@@ -38,9 +43,9 @@
       <button type="button" class="test-popup__add test-btn test-btn--black" data-test-add-to-cart>
         <span data-test-add-label>ADD TO CART</span>
         <span class="test-btn__arrow" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="12" viewBox="0 0 26 12" fill="none">
-                <path d="M0.75 4.77298L7.37629e-08 4.77298L-7.37629e-08 6.27298L0.75 6.27298L0.75 4.77298ZM25.2803 6.05331C25.5732 5.76042 25.5732 5.28554 25.2803 4.99265L20.5074 0.21968C20.2145 -0.073213 19.7396 -0.0732131 19.4467 0.21968C19.1538 0.512574 19.1538 0.987447 19.4467 1.28034L23.6893 5.52298L19.4467 9.76562C19.1538 10.0585 19.1538 10.5334 19.4467 10.8263C19.7396 11.1192 20.2145 11.1192 20.5074 10.8263L25.2803 6.05331ZM0.75 6.27298L24.75 6.27298L24.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="black"/>
-            </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="12" viewBox="0 0 26 12" fill="none">
+            <path d="M0.75 4.77298L7.37629e-08 4.77298L-7.37629e-08 6.27298L0.75 6.27298L0.75 4.77298ZM25.2803 6.05331C25.5732 5.76042 25.5732 5.28554 25.2803 4.99265L20.5074 0.21968C20.2145 -0.073213 19.7396 -0.0732131 19.4467 0.21968C19.1538 0.512574 19.1538 0.987447 19.4467 1.28034L23.6893 5.52298L19.4467 9.76562C19.1538 10.0585 19.1538 10.5334 19.4467 10.8263C19.7396 11.1192 20.2145 11.1192 20.5074 10.8263L25.2803 6.05331ZM0.75 6.27298L24.75 6.27298L24.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="currentColor"/>
+          </svg>
         </span>
       </button>
       <p class="test-popup__status" data-test-popup-status></p>
@@ -51,7 +56,9 @@
 {% schema %}
 {
   "name": "TEST Vison",
+  "tag": "section",
   "class": "test-vison-section",
+  "max_blocks": 6,
   "blocks": [
     {
       "type": "test-product"
@@ -62,6 +69,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
+      "default": "Tisso vison in the wild"
     }
   ],
   "presets": [
