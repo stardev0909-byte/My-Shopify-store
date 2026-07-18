@@ -382,6 +382,8 @@
           "type": "test-hero-test",
           "name": "Hero content",
           "settings": {
+            "image_desktop": "shopify://shop_images/Group_1000008197.png",
+            "image_mobile": "shopify://shop_images/Frame.png",
             "image_alt": "The Gift Guide"
           },
           "blocks": {
