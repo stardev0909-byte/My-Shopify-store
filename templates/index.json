@@ -379,11 +379,19 @@
             "text_desktop": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
             "text_mobile": "Discover Joy: Your Ultimate Holiday Gift Destination."
           }
+        },
+        "button_8bt8MA": {
+          "type": "button",
+          "settings": {
+            "label": "SHOP NOW",
+            "link": ""
+          }
         }
       },
       "block_order": [
         "heading_twbxk3",
-        "description_pYPKDK"
+        "description_pYPKDK",
+        "button_8bt8MA"
       ],
       "name": "TEST Hero",
       "settings": {
