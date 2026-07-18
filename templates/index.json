@@ -443,8 +443,8 @@
           "name": "Product",
           "settings": {
             "product": "black-leather-bag",
-            "hotspot_top_desktop": 10,
-            "hotspot_left_desktop": 70,
+            "hotspot_top_desktop": 47,
+            "hotspot_left_desktop": 33,
             "hotspot_top_mobile": 10,
             "hotspot_left_mobile": 70
           },
@@ -491,7 +491,7 @@
           "name": "Product",
           "settings": {
             "product": "dark-denim-top",
-            "hotspot_top_desktop": 10,
+            "hotspot_top_desktop": 53,
             "hotspot_left_desktop": 70,
             "hotspot_top_mobile": 10,
             "hotspot_left_mobile": 70
