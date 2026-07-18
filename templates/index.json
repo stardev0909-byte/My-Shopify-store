@@ -367,96 +367,74 @@
     "test_hero_Ufb6fn": {
       "type": "TEST-HERO",
       "blocks": {
-        "heading_twbxk3": {
-          "type": "heading",
+        "test_hero_header_fHRELA": {
+          "type": "test-hero-header",
+          "name": "Hero header",
           "settings": {
-            "text": "The Gift Guide"
-          }
+            "logo_text": "TISSO VISON",
+            "announcement": "Find the ideal gift for your loved ones.",
+            "choose_gift_label": "CHOOSE GIFT",
+            "choose_gift_link": ""
+          },
+          "blocks": {}
         },
-        "description_pYPKDK": {
-          "type": "description",
+        "test_hero_test_XxjWDy": {
+          "type": "test-hero-test",
+          "name": "Hero content",
           "settings": {
-            "text_desktop": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
-            "text_mobile": "Discover Joy: Your Ultimate Holiday Gift Destination."
-          }
+            "image_alt": "The Gift Guide"
+          },
+          "blocks": {
+            "test_hero_heading_3fQy3h": {
+              "type": "test-hero-heading",
+              "settings": {
+                "text": "The Gift Guide"
+              },
+              "blocks": {}
+            },
+            "test_hero_description_LaBHNQ": {
+              "type": "test-hero-description",
+              "settings": {
+                "text_desktop": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+                "text_mobile": "Discover Joy: Your Ultimate Holiday Gift Destination."
+              },
+              "blocks": {}
+            },
+            "test_hero_button_yJkYYa": {
+              "type": "test-hero-button",
+              "settings": {
+                "label": "SHOP NOW",
+                "link": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "test_hero_heading_3fQy3h",
+            "test_hero_description_LaBHNQ",
+            "test_hero_button_yJkYYa"
+          ]
+        },
+        "test_hero_bottom_ypcAAP": {
+          "type": "test-hero-bottom",
+          "name": "Hero bottom",
+          "settings": {
+            "strip_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
+            "strip_text_mobile": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "heading_twbxk3",
-        "description_pYPKDK"
+        "test_hero_header_fHRELA",
+        "test_hero_test_XxjWDy",
+        "test_hero_bottom_ypcAAP"
       ],
       "name": "TEST Hero",
-      "settings": {
-        "logo_text": "TISSO VISON",
-        "announcement": "Find the ideal gift for your loved ones.",
-        "choose_gift_label": "CHOOSE GIFT",
-        "choose_gift_link": "",
-        "image_desktop": "shopify://shop_images/Group_1000008197.png",
-        "image_mobile": "shopify://shop_images/Frame.png",
-        "strip_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
-        "strip_text_mobile": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
-      }
+      "settings": {}
     },
     "test_vison_nteVgd": {
       "type": "TEST-VISON",
-      "blocks": {
-        "product_XVdhpy": {
-          "type": "product",
-          "settings": {
-            "product": "black-leather-bag",
-            "hotspot_top": 10,
-            "hotspot_left": 70
-          }
-        },
-        "product_cHrVQP": {
-          "type": "product",
-          "settings": {
-            "product": "blue-silk-tuxedo",
-            "hotspot_top": 10,
-            "hotspot_left": 70
-          }
-        },
-        "product_RehkHh": {
-          "type": "product",
-          "settings": {
-            "product": "chequered-red-shirt",
-            "hotspot_top": 10,
-            "hotspot_left": 70
-          }
-        },
-        "product_7JCRUF": {
-          "type": "product",
-          "settings": {
-            "product": "classic-leather-jacket",
-            "hotspot_top": 10,
-            "hotspot_left": 70
-          }
-        },
-        "product_W944Dq": {
-          "type": "product",
-          "settings": {
-            "product": "classic-varsity-top",
-            "hotspot_top": 10,
-            "hotspot_left": 70
-          }
-        },
-        "product_4qQaLx": {
-          "type": "product",
-          "settings": {
-            "product": "dark-denim-top",
-            "hotspot_top": 10,
-            "hotspot_left": 70
-          }
-        }
-      },
-      "block_order": [
-        "product_XVdhpy",
-        "product_cHrVQP",
-        "product_RehkHh",
-        "product_7JCRUF",
-        "product_W944Dq",
-        "product_4qQaLx"
-      ],
       "name": "TEST Vison",
       "settings": {
         "heading": "Tisso vison in the wild"
