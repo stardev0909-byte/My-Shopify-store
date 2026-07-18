@@ -5,6 +5,7 @@
 {% endif %}
 
 {% assign strip_mobile = block.settings.strip_text_mobile | default: block.settings.strip_text %}
+
 {% if strip_mobile != blank %}
   <div class="test-hero__strip test-hero__strip--mobile" {{ block.shopify_attributes }}>
     <p>{{ strip_mobile }}</p>
