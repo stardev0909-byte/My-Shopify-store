@@ -1,0 +1,118 @@
+{% assign product = block.settings.product %}
+
+<article class="test-vison__item" {{ block.shopify_attributes }}>
+  {% if product != blank %}
+    {% liquid
+      assign card_image = block.settings.image
+      if card_image == blank
+        assign card_image = product.featured_image
+      endif
+    %}
+
+    <script type="application/json" data-test-product>
+      {
+        "id": {{ product.id | json }},
+        "handle": {{ product.handle | json }},
+        "title": {{ product.title | json }},
+        "description": {{ product.description | json }},
+        "featured_image": {% if product.featured_image %}{{ product.featured_image | image_url: width: 600 | json }}{% else %}""{% endif %},
+        "images": [
+          {% for image in product.images %}
+            {{ image | image_url: width: 600 | json }}{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ],
+        "options": {{ product.options | json }},
+        "variants": [
+          {% for variant in product.variants %}
+            {
+              "id": {{ variant.id | json }},
+              "title": {{ variant.title | json }},
+              "available": {{ variant.available | json }},
+              "price": {{ variant.price | json }},
+              "option1": {{ variant.option1 | json }},
+              "option2": {{ variant.option2 | json }},
+              "option3": {{ variant.option3 | json }}
+            }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
+      }
+    </script>
+
+    <div class="test-vison__media">
+      {% if card_image != blank %}
+        {{
+          card_image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'lazy',
+            sizes: '(min-width: 750px) 33vw, 50vw',
+            widths: '340, 433, 690, 866, 1200',
+            alt: product.title
+        }}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'test-vison__placeholder' }}
+      {% endif %}
+
+      <button
+        type="button"
+        class="test-vison__hotspot"
+        style="--hotspot-top: {{ block.settings.hotspot_top }}%; --hotspot-left: {{ block.settings.hotspot_left }}%;"
+        data-test-hotspot
+        data-product-handle="{{ product.handle }}"
+        aria-label="Quick view {{ product.title }}"
+      >
+        <span aria-hidden="true">+</span>
+      </button>
+    </div>
+  {% else %}
+    <div class="test-vison__media test-vison__media--empty">
+      {{ 'product-1' | placeholder_svg_tag: 'test-vison__placeholder' }}
+      <p class="test-vison__empty">Select a product</p>
+    </div>
+  {% endif %}
+</article>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": null,
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Custom lifestyle image",
+      "info": "Optional. Uses the product image if empty."
+    },
+    {
+      "type": "range",
+      "id": "hotspot_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Hotspot top position",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "hotspot_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Hotspot left position",
+      "default": 70
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product"
+    }
+  ]
+}
+{% endschema %}
