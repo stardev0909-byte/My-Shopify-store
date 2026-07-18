@@ -288,7 +288,11 @@
                   ${selected || 'Choose your size'}
                 </span>
                 <span class="test-popup__dropdown-divider" aria-hidden="true"></span>
-                <span class="test-popup__dropdown-chevron" aria-hidden="true"></span>
+                <span class="test-popup__dropdown-chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="9" viewBox="0 0 15 9" fill="none">
+                    <path d="M1.06067 1.06067L7.06067 7.06067L13.0607 1.06067" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+                  </svg>
+                </span>
               </button>
               <div class="test-popup__dropdown-menu" role="listbox">${list}</div>
             </div>
