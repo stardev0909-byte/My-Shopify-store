@@ -5,303 +5,51 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
 
-{% liquid
-  assign desktop_image = section.settings.image_desktop
-  assign mobile_image = section.settings.image_mobile
-  if mobile_image == blank
-    assign mobile_image = desktop_image
-  endif
-
-  assign heading_alt = ''
-  for block in section.blocks
-    if block.type == 'heading' and block.settings.text != blank
-      assign heading_alt = block.settings.text
-      break
-    endif
-  endfor
-%}
-
-<section class="test-hero" id="test-hero-{{ section.id }}">
-  <header class="test-header" data-test-header>
-    <div class="test-header__bar">
-      <button
-        type="button"
-        class="test-header__toggle"
-        data-test-header-toggle
-        aria-expanded="false"
-        aria-controls="test-header-panel-{{ section.id }}"
-        aria-label="Open menu"
-      >
-        <span class="test-header__burger" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-        <span class="test-header__close" aria-hidden="true"></span>
-      </button>
-
-      <a class="test-header__logo" href="{{ routes.root_url }}">
-        {% if section.settings.logo != blank %}
-          {{
-            section.settings.logo
-            | image_url: width: 320
-            | image_tag: loading: 'eager', widths: '160, 240, 320', alt: shop.name
-          }}
-        {% else %}
-          <span class="test-header__logo-text">{{ section.settings.logo_text }}</span>
-        {% endif %}
-      </a>
-
-      <span class="test-header__spacer" aria-hidden="true"></span>
-
-      {% if section.settings.announcement != blank %}
-        <p class="test-header__announcement test-header__announcement--desktop">
-          {{ section.settings.announcement }}
-        </p>
-      {% endif %}
-
-      {% if section.settings.choose_gift_label != blank %}
-        <a
-          class="test-header__choose-gift test-header__choose-gift--desktop test-btn test-btn--yellow"
-          href="{{ section.settings.choose_gift_link }}"
-        >
-          <span>{{ section.settings.choose_gift_label }}</span>
-          <span class="test-btn__arrow" aria-hidden="true"></span>
-        </a>
-      {% endif %}
-    </div>
-
-    <div class="test-header__panel" id="test-header-panel-{{ section.id }}" data-test-header-panel>
-      {% if section.settings.announcement != blank %}
-        <p class="test-header__panel-text">{{ section.settings.announcement }}</p>
-      {% endif %}
-
-      {% if section.settings.choose_gift_label != blank %}
-        <a
-          class="test-header__choose-gift test-header__choose-gift--mobile test-btn test-btn--yellow"
-          href="{{ section.settings.choose_gift_link }}"
-        >
-          <span>{{ section.settings.choose_gift_label }}</span>
-          <span class="test-btn__arrow" aria-hidden="true"></span>
-        </a>
-      {% endif %}
-    </div>
-  </header>
-
-  <div class="test-hero__hero">
-    {% if desktop_image != blank %}
-      <div class="test-hero__media test-hero__media--desktop">
-        {{
-          desktop_image
-          | image_url: width: 2880
-          | image_tag:
-            loading: 'eager',
-            sizes: '100vw',
-            widths: '750, 1100, 1500, 2000, 2880',
-            alt: heading_alt
-        }}
-      </div>
-    {% endif %}
-
-    {% if mobile_image != blank %}
-      <div class="test-hero__media test-hero__media--mobile">
-        {{
-          mobile_image
-          | image_url: width: 1500
-          | image_tag:
-            loading: 'eager',
-            sizes: '100vw',
-            widths: '375, 750, 1100, 1500',
-            alt: heading_alt
-        }}
-      </div>
-    {% endif %}
-
-    <div class="test-hero__content">
-      {% for block in section.blocks %}
-        {% case block.type %}
-          {% when 'heading' %}
-            {% if block.settings.text != blank %}
-              <h1 class="test-hero__heading" {{ block.shopify_attributes }}>
-                {{ block.settings.text }}
-              </h1>
-            {% endif %}
-
-          {% when 'description' %}
-            {% if block.settings.text_desktop != blank %}
-              <p class="test-hero__description test-hero__description--desktop" {{ block.shopify_attributes }}>
-                {{ block.settings.text_desktop }}
-              </p>
-            {% endif %}
-
-            {% if block.settings.text_mobile != blank %}
-              <p class="test-hero__description test-hero__description--mobile" {{ block.shopify_attributes }}>
-                {{ block.settings.text_mobile }}
-              </p>
-            {% elsif block.settings.text_desktop != blank %}
-              <p class="test-hero__description test-hero__description--mobile" {{ block.shopify_attributes }}>
-                {{ block.settings.text_desktop }}
-              </p>
-            {% endif %}
-
-          {% when 'button' %}
-            {% if block.settings.label != blank %}
-              <a
-                class="test-hero__shop-now test-btn test-btn--black"
-                href="{{ block.settings.link }}"
-                {{ block.shopify_attributes }}
-              >
-                <span>{{ block.settings.label }}</span>
-                <span class="test-btn__arrow" aria-hidden="true"></span>
-              </a>
-            {% endif %}
-        {% endcase %}
-      {% endfor %}
-    </div>
-  </div>
-
-  {% if section.settings.strip_text != blank %}
-    <div class="test-hero__strip test-hero__strip--desktop">
-      <p>{{ section.settings.strip_text }}</p>
-    </div>
-  {% endif %}
-
-  {% assign strip_mobile = section.settings.strip_text_mobile | default: section.settings.strip_text %}
-  {% if strip_mobile != blank %}
-    <div class="test-hero__strip test-hero__strip--mobile">
-      <p>{{ strip_mobile }}</p>
-    </div>
-  {% endif %}
-</section>
+<div class="test-hero" id="test-hero-{{ section.id }}">
+  {% content_for 'blocks' %}
+</div>
 
 {% schema %}
 {
   "name": "TEST Hero",
   "tag": "section",
   "class": "test-hero-section",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Header"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Logo image"
-    },
-    {
-      "type": "text",
-      "id": "logo_text",
-      "label": "Logo text",
-      "default": "TISSO VISON"
-    },
-    {
-      "type": "text",
-      "id": "announcement",
-      "label": "Announcement text",
-      "default": "Find the ideal gift for your loved ones."
-    },
-    {
-      "type": "text",
-      "id": "choose_gift_label",
-      "label": "Choose gift button label",
-      "default": "CHOOSE GIFT"
-    },
-    {
-      "type": "url",
-      "id": "choose_gift_link",
-      "label": "Choose gift button link"
-    },
-    {
-      "type": "header",
-      "content": "Background"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_desktop",
-      "label": "Desktop background image"
-    },
-    {
-      "type": "image_picker",
-      "id": "image_mobile",
-      "label": "Mobile background image"
-    },
-    {
-      "type": "header",
-      "content": "Strip"
-    },
-    {
-      "type": "text",
-      "id": "strip_text",
-      "label": "Strip text (desktop)",
-      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
-    },
-    {
-      "type": "text",
-      "id": "strip_text_mobile",
-      "label": "Strip text (mobile)",
-      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
-    }
-  ],
   "blocks": [
     {
-      "type": "heading",
-      "name": "Heading",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Heading",
-          "default": "The Gift Guide"
-        }
-      ]
+      "type": "test-hero-header"
     },
     {
-      "type": "description",
-      "name": "Description",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "textarea",
-          "id": "text_desktop",
-          "label": "Description (desktop)",
-          "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
-        },
-        {
-          "type": "textarea",
-          "id": "text_mobile",
-          "label": "Description (mobile)",
-          "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
-        }
-      ]
+      "type": "test-hero-test"
     },
     {
-      "type": "button",
-      "name": "Button",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Button label",
-          "default": "SHOP NOW"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Button link"
-        }
-      ]
+      "type": "test-hero-bottom"
     }
   ],
+  "settings": [],
   "presets": [
     {
       "name": "TEST Hero",
       "blocks": [
-        { "type": "heading" },
-        { "type": "description" },
-        { "type": "button" }
+        {
+          "type": "test-hero-header"
+        },
+        {
+          "type": "test-hero-test",
+          "blocks": [
+            {
+              "type": "test-hero-heading"
+            },
+            {
+              "type": "test-hero-description"
+            },
+            {
+              "type": "test-hero-button"
+            }
+          ]
+        },
+        {
+          "type": "test-hero-bottom"
+        }
       ]
     }
   ]
