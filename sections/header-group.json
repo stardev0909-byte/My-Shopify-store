@@ -80,9 +80,20 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
+    },
+    "test_header_fbyzAq": {
+      "type": "TEST-HEADER",
+      "name": "TEST Header",
+      "settings": {
+        "logo_text": "TISSO VISON",
+        "announcement": "Find the ideal gift for your loved ones.",
+        "choose_gift_label": "CHOOSE GIFT",
+        "choose_gift_link": ""
+      }
     }
   },
   "order": [
-    "header_section"
+    "header_section",
+    "test_header_fbyzAq"
   ]
 }
