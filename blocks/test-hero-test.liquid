@@ -1,0 +1,93 @@
+{% liquid
+  assign desktop_image = block.settings.image_desktop
+  assign mobile_image = block.settings.image_mobile
+  if mobile_image == blank
+    assign mobile_image = desktop_image
+  endif
+%}
+
+<div class="test-hero__hero" {{ block.shopify_attributes }}>
+  {% if desktop_image != blank %}
+    <div class="test-hero__media test-hero__media--desktop">
+      {{
+        desktop_image
+        | image_url: width: 2880
+        | image_tag:
+          loading: 'eager',
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 2000, 2880',
+          alt: block.settings.image_alt
+      }}
+    </div>
+  {% endif %}
+
+  {% if mobile_image != blank %}
+    <div class="test-hero__media test-hero__media--mobile">
+      {{
+        mobile_image
+        | image_url: width: 1500
+        | image_tag:
+          loading: 'eager',
+          sizes: '100vw',
+          widths: '375, 750, 1100, 1500',
+          alt: block.settings.image_alt
+      }}
+    </div>
+  {% endif %}
+
+  <div class="test-hero__content">
+    {% content_for 'blocks' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero content",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "test-hero-heading"
+    },
+    {
+      "type": "test-hero-description"
+    },
+    {
+      "type": "test-hero-button"
+    }
+  ],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile background image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "The Gift Guide"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero content",
+      "blocks": [
+        {
+          "type": "test-hero-heading"
+        },
+        {
+          "type": "test-hero-description"
+        },
+        {
+          "type": "test-hero-button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
