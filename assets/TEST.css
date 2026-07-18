@@ -1,4 +1,5 @@
-.test-header-section {
+.test-header-section,
+.test-hero-section {
   position: relative;
   z-index: 20;
   overflow: visible;
