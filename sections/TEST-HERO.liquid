@@ -1,186 +1,146 @@
 {{ 'TEST.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'TEST.js' | asset_url }}" defer></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Lustria&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
 
-<test-vison-grid
-  class="test-vison"
-  id="test-vison-{{ section.id }}"
-  data-money-format="{{ shop.money_format | escape }}"
->
-  {% if section.settings.heading != blank %}
-    <h2 class="test-vison__heading">{{ section.settings.heading }}</h2>
-  {% endif %}
+{% liquid
+  assign desktop_image = section.settings.image_desktop
+  assign mobile_image = section.settings.image_mobile
+  if mobile_image == blank
+    assign mobile_image = desktop_image
+  endif
+%}
 
-  <div class="test-vison__items">
-    {% for block in section.blocks %}
-      {% assign product = block.settings.product %}
-      <article class="test-vison__item" {{ block.shopify_attributes }}>
-        {% if product != blank %}
-          {% liquid
-            assign card_image = block.settings.image
-            if card_image == blank
-              assign card_image = product.featured_image
-            endif
-          %}
-
-          <script type="application/json" data-test-product>
-            {
-              "id": {{ product.id | json }},
-              "handle": {{ product.handle | json }},
-              "title": {{ product.title | json }},
-              "description": {{ product.description | json }},
-              "featured_image": {% if product.featured_image %}{{ product.featured_image | image_url: width: 600 | json }}{% else %}""{% endif %},
-              "images": [
-                {% for image in product.images %}
-                  {{ image | image_url: width: 600 | json }}{% unless forloop.last %},{% endunless %}
-                {% endfor %}
-              ],
-              "options": {{ product.options | json }},
-              "variants": [
-                {% for variant in product.variants %}
-                  {
-                    "id": {{ variant.id | json }},
-                    "title": {{ variant.title | json }},
-                    "available": {{ variant.available | json }},
-                    "price": {{ variant.price | json }},
-                    "option1": {{ variant.option1 | json }},
-                    "option2": {{ variant.option2 | json }},
-                    "option3": {{ variant.option3 | json }}
-                  }{% unless forloop.last %},{% endunless %}
-                {% endfor %}
-              ]
-            }
-          </script>
-
-          <div class="test-vison__media">
-            {% if card_image != blank %}
-              {{
-                card_image
-                | image_url: width: 1200
-                | image_tag:
-                  loading: 'lazy',
-                  sizes: '(min-width: 750px) 33vw, 50vw',
-                  widths: '340, 433, 690, 866, 1200',
-                  alt: product.title
-              }}
-            {% else %}
-              {{ 'product-1' | placeholder_svg_tag: 'test-vison__placeholder' }}
-            {% endif %}
-
-            <button
-              type="button"
-              class="test-vison__hotspot"
-              style="--hotspot-top: {{ block.settings.hotspot_top }}%; --hotspot-left: {{ block.settings.hotspot_left }}%;"
-              data-test-hotspot
-              data-product-handle="{{ product.handle }}"
-              aria-label="Quick view {{ product.title }}"
-            >
-              <span aria-hidden="true">+</span>
-            </button>
-          </div>
-        {% else %}
-          <div class="test-vison__media test-vison__media--empty">
-            {{ 'product-1' | placeholder_svg_tag: 'test-vison__placeholder' }}
-            <p class="test-vison__empty">Select a product</p>
-          </div>
-        {% endif %}
-      </article>
-    {% endfor %}
-  </div>
-
-  <div class="test-popup-overlay" data-test-popup-overlay hidden>
-    <div class="test-popup" data-test-popup role="dialog" aria-modal="true" aria-label="Product quick view">
-      <button type="button" class="test-popup__close" data-test-close aria-label="Close"></button>
-
-      <div class="test-popup__top">
-        <div class="test-popup__image-wrap">
-          <img data-test-popup-image src="" alt="">
-        </div>
-        <div class="test-popup__info">
-          <h3 class="test-popup__title" data-test-popup-title></h3>
-          <p class="test-popup__price" data-test-popup-price></p>
-          <p class="test-popup__description" data-test-popup-description></p>
-        </div>
+<section class="test-hero" id="test-hero-{{ section.id }}">
+  <div class="test-hero__hero">
+    {% if desktop_image != blank %}
+      <div class="test-hero__media test-hero__media--desktop">
+        {{
+          desktop_image
+          | image_url: width: 2880
+          | image_tag:
+            loading: 'eager',
+            sizes: '100vw',
+            widths: '750, 1100, 1500, 2000, 2880',
+            alt: section.settings.heading
+        }}
       </div>
+    {% endif %}
 
-      <div class="test-popup__options" data-test-popup-options></div>
+    {% if mobile_image != blank %}
+      <div class="test-hero__media test-hero__media--mobile">
+        {{
+          mobile_image
+          | image_url: width: 1500
+          | image_tag:
+            loading: 'eager',
+            sizes: '100vw',
+            widths: '375, 750, 1100, 1500',
+            alt: section.settings.heading
+        }}
+      </div>
+    {% endif %}
 
-      <button type="button" class="test-popup__add test-btn test-btn--black" data-test-add-to-cart>
-        <span data-test-add-label>ADD TO CART</span>
-        <span class="test-btn__arrow" aria-hidden="true"></span>
-      </button>
-      <p class="test-popup__status" data-test-popup-status></p>
+    <div class="test-hero__content">
+      {% if section.settings.heading != blank %}
+        <h1 class="test-hero__heading">{{ section.settings.heading }}</h1>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="test-hero__description test-hero__description--desktop">{{ section.settings.description }}</p>
+      {% endif %}
+
+      {% if section.settings.description_mobile != blank %}
+        <p class="test-hero__description test-hero__description--mobile">{{ section.settings.description_mobile }}</p>
+      {% elsif section.settings.description != blank %}
+        <p class="test-hero__description test-hero__description--mobile">{{ section.settings.description }}</p>
+      {% endif %}
+
+      {% if section.settings.shop_now_label != blank %}
+        <a class="test-hero__shop-now test-btn test-btn--black" href="{{ section.settings.shop_now_link }}">
+          <span>{{ section.settings.shop_now_label }}</span>
+          <span class="test-btn__arrow" aria-hidden="true"></span>
+        </a>
+      {% endif %}
     </div>
   </div>
-</test-vison-grid>
+
+  {% if section.settings.strip_text != blank %}
+    <div class="test-hero__strip test-hero__strip--desktop">
+      <p>{{ section.settings.strip_text }}</p>
+    </div>
+  {% endif %}
+
+  {% assign strip_mobile = section.settings.strip_text_mobile | default: section.settings.strip_text %}
+  {% if strip_mobile != blank %}
+    <div class="test-hero__strip test-hero__strip--mobile">
+      <p>{{ strip_mobile }}</p>
+    </div>
+  {% endif %}
+</section>
 
 {% schema %}
 {
-  "name": "TEST Vison",
+  "name": "TEST Hero",
   "tag": "section",
-  "class": "test-vison-section",
-  "max_blocks": 6,
+  "class": "test-hero-section",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile background image"
+    },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Tisso vison in the wild"
-    }
-  ],
-  "blocks": [
+      "default": "The Gift Guide"
+    },
     {
-      "type": "product",
-      "name": "Product",
-      "settings": [
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Product"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Custom lifestyle image",
-          "info": "Optional. Uses the product image if empty."
-        },
-        {
-          "type": "range",
-          "id": "hotspot_top",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Hotspot top position",
-          "default": 10
-        },
-        {
-          "type": "range",
-          "id": "hotspot_left",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Hotspot left position",
-          "default": 70
-        }
-      ]
+      "type": "textarea",
+      "id": "description",
+      "label": "Description (desktop)",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+    },
+    {
+      "type": "textarea",
+      "id": "description_mobile",
+      "label": "Description (mobile)",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
+    },
+    {
+      "type": "text",
+      "id": "shop_now_label",
+      "label": "Shop now button label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "shop_now_link",
+      "label": "Shop now button link"
+    },
+    {
+      "type": "text",
+      "id": "strip_text",
+      "label": "Strip text (desktop)",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    },
+    {
+      "type": "text",
+      "id": "strip_text_mobile",
+      "label": "Strip text (mobile)",
+      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
     }
   ],
   "presets": [
     {
-      "name": "TEST Vison",
-      "blocks": [
-        { "type": "product" },
-        { "type": "product" },
-        { "type": "product" },
-        { "type": "product" },
-        { "type": "product" },
-        { "type": "product" }
-      ]
+      "name": "TEST Hero"
     }
   ]
 }
