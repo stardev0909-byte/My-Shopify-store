@@ -435,6 +435,23 @@
     },
     "test_vison_nteVgd": {
       "type": "TEST-VISON",
+      "blocks": {
+        "test_product_yb4MUp": {
+          "type": "test-product",
+          "name": "Product",
+          "settings": {
+            "product": "blue-silk-tuxedo",
+            "hotspot_top_desktop": 10,
+            "hotspot_left_desktop": 70,
+            "hotspot_top_mobile": 10,
+            "hotspot_left_mobile": 70
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "test_product_yb4MUp"
+      ],
       "name": "TEST Vison",
       "settings": {
         "heading": "Tisso vison in the wild"
