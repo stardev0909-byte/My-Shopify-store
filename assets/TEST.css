@@ -1,9 +1,17 @@
+.test-header-section {
+  position: relative;
+  z-index: 20;
+  overflow: visible;
+}
+
 .test-header {
   --test-jost: 'Jost', sans-serif;
   --test-yellow: #fff544;
   --test-gray: #f5f5f5;
   --test-black: #000;
   --test-white: #fff;
+  position: relative;
+  z-index: 20;
   font-family: var(--test-jost);
   color: var(--test-black);
   background: var(--test-white);
@@ -11,33 +19,34 @@
 
 .test-header__bar {
   position: relative;
-  display: flex;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
   align-items: center;
-  justify-content: center;
   min-height: 65px;
-  padding: 20px 16px;
+  padding: 12px 8px;
   background: var(--test-white);
 }
 
 .test-header__toggle {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  z-index: 2;
-  width: 24px;
-  height: 24px;
+  position: relative;
+  z-index: 5;
+  justify-self: start;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
   background: transparent;
-  transform: translateY(-50%);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .test-header__burger,
 .test-header__close {
   position: absolute;
-  inset: 0;
-  margin: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .test-header__burger {
@@ -83,7 +92,6 @@
 
 .test-header.is-open .test-header__burger {
   opacity: 0;
-  pointer-events: none;
 }
 
 .test-header.is-open .test-header__close {
@@ -94,9 +102,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  justify-self: center;
   text-decoration: none;
   color: inherit;
-  flex-shrink: 0;
 }
 
 .test-header__logo img {
@@ -113,6 +121,12 @@
   line-height: 1;
 }
 
+.test-header__spacer {
+  display: block;
+  width: 44px;
+  height: 1px;
+}
+
 .test-header__announcement--desktop,
 .test-header a.test-header__choose-gift--desktop {
   display: none !important;
@@ -120,6 +134,11 @@
 
 .test-header__panel {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -152,6 +171,7 @@
   }
 
   .test-header__bar {
+    display: flex;
     justify-content: space-between;
     gap: 24px;
     min-height: 64px;
@@ -159,20 +179,19 @@
     background: var(--test-gray);
   }
 
-  .test-header__toggle {
-    display: none;
-  }
-
+  .test-header__toggle,
+  .test-header__spacer,
   .test-header__panel {
     display: none !important;
   }
 
   .test-header__logo {
     justify-content: flex-start;
+    justify-self: auto;
   }
 
   .test-header__announcement--desktop {
-    display: block;
+    display: block !important;
     margin: 0;
     font-size: 16px;
     line-height: 1;
