@@ -1,0 +1,38 @@
+{% if block.settings.strip_text != blank %}
+  <div class="test-hero__strip test-hero__strip--desktop" {{ block.shopify_attributes }}>
+    <p>{{ block.settings.strip_text }}</p>
+  </div>
+{% endif %}
+
+{% assign strip_mobile = block.settings.strip_text_mobile | default: block.settings.strip_text %}
+{% if strip_mobile != blank %}
+  <div class="test-hero__strip test-hero__strip--mobile" {{ block.shopify_attributes }}>
+    <p>{{ strip_mobile }}</p>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Hero bottom",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "strip_text",
+      "label": "Strip text (desktop)",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    },
+    {
+      "type": "text",
+      "id": "strip_text_mobile",
+      "label": "Strip text (mobile)",
+      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero bottom"
+    }
+  ]
+}
+{% endschema %}

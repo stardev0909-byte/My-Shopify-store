@@ -1,0 +1,35 @@
+{% if block.settings.label != blank %}
+  <a
+    class="test-hero__shop-now test-btn test-btn--black"
+    href="{{ block.settings.link }}"
+    {{ block.shopify_attributes }}
+  >
+    <span>{{ block.settings.label }}</span>
+    <span class="test-btn__arrow" aria-hidden="true"></span>
+  </a>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Button",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Button label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Button"
+    }
+  ]
+}
+{% endschema %}
