@@ -1,4 +1,5 @@
 {{ 'TEST.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'TEST.js' | asset_url }}" defer></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +22,72 @@
 %}
 
 <section class="test-hero" id="test-hero-{{ section.id }}">
+  <header class="test-header" data-test-header>
+    <div class="test-header__bar">
+      <button
+        type="button"
+        class="test-header__toggle"
+        data-test-header-toggle
+        aria-expanded="false"
+        aria-controls="test-header-panel-{{ section.id }}"
+        aria-label="Open menu"
+      >
+        <span class="test-header__burger" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span class="test-header__close" aria-hidden="true"></span>
+      </button>
+
+      <a class="test-header__logo" href="{{ routes.root_url }}">
+        {% if section.settings.logo != blank %}
+          {{
+            section.settings.logo
+            | image_url: width: 320
+            | image_tag: loading: 'eager', widths: '160, 240, 320', alt: shop.name
+          }}
+        {% else %}
+          <span class="test-header__logo-text">{{ section.settings.logo_text }}</span>
+        {% endif %}
+      </a>
+
+      <span class="test-header__spacer" aria-hidden="true"></span>
+
+      {% if section.settings.announcement != blank %}
+        <p class="test-header__announcement test-header__announcement--desktop">
+          {{ section.settings.announcement }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.choose_gift_label != blank %}
+        <a
+          class="test-header__choose-gift test-header__choose-gift--desktop test-btn test-btn--yellow"
+          href="{{ section.settings.choose_gift_link }}"
+        >
+          <span>{{ section.settings.choose_gift_label }}</span>
+          <span class="test-btn__arrow" aria-hidden="true"></span>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="test-header__panel" id="test-header-panel-{{ section.id }}" data-test-header-panel>
+      {% if section.settings.announcement != blank %}
+        <p class="test-header__panel-text">{{ section.settings.announcement }}</p>
+      {% endif %}
+
+      {% if section.settings.choose_gift_label != blank %}
+        <a
+          class="test-header__choose-gift test-header__choose-gift--mobile test-btn test-btn--yellow"
+          href="{{ section.settings.choose_gift_link }}"
+        >
+          <span>{{ section.settings.choose_gift_label }}</span>
+          <span class="test-btn__arrow" aria-hidden="true"></span>
+        </a>
+      {% endif %}
+    </div>
+  </header>
+
   <div class="test-hero__hero">
     {% if desktop_image != blank %}
       <div class="test-hero__media test-hero__media--desktop">
@@ -114,6 +181,42 @@
   "class": "test-hero-section",
   "settings": [
     {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "announcement",
+      "label": "Announcement text",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    {
+      "type": "text",
+      "id": "choose_gift_label",
+      "label": "Choose gift button label",
+      "default": "CHOOSE GIFT"
+    },
+    {
+      "type": "url",
+      "id": "choose_gift_link",
+      "label": "Choose gift button link"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
       "type": "image_picker",
       "id": "image_desktop",
       "label": "Desktop background image"
@@ -122,6 +225,10 @@
       "type": "image_picker",
       "id": "image_mobile",
       "label": "Mobile background image"
+    },
+    {
+      "type": "header",
+      "content": "Strip"
     },
     {
       "type": "text",
