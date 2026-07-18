@@ -404,18 +404,19 @@
     customElements.define('test-vison-grid', TestVisonGrid);
   }
 
-  function initTestHeader(header) {
-    const toggle = header.querySelector('[data-test-header-toggle]');
-    const panel = header.querySelector('[data-test-header-panel]');
-    if (!toggle || !panel) return;
+  if (!window.__testHeaderBound) {
+    window.__testHeaderBound = true;
+    document.addEventListener('click', (event) => {
+      const toggle = event.target.closest('[data-test-header-toggle]');
+      if (!toggle) return;
 
-    toggle.addEventListener('click', () => {
+      const header = toggle.closest('[data-test-header]');
+      if (!header) return;
+
+      event.preventDefault();
       const isOpen = header.classList.toggle('is-open');
-      panel.hidden = !isOpen;
       toggle.setAttribute('aria-expanded', String(isOpen));
       toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
     });
   }
-
-  document.querySelectorAll('[data-test-header]').forEach(initTestHeader);
 })();
