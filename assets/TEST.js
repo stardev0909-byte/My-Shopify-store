@@ -403,4 +403,19 @@
   if (!customElements.get('test-vison-grid')) {
     customElements.define('test-vison-grid', TestVisonGrid);
   }
+
+  function initTestHeader(header) {
+    const toggle = header.querySelector('[data-test-header-toggle]');
+    const panel = header.querySelector('[data-test-header-panel]');
+    if (!toggle || !panel) return;
+
+    toggle.addEventListener('click', () => {
+      const isOpen = header.classList.toggle('is-open');
+      panel.hidden = !isOpen;
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    });
+  }
+
+  document.querySelectorAll('[data-test-header]').forEach(initTestHeader);
 })();
