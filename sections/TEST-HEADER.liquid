@@ -1,5 +1,4 @@
 {{ 'TEST.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'TEST.js' | asset_url }}" defer></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,8 +14,12 @@
       aria-controls="test-header-panel-{{ section.id }}"
       aria-label="Open menu"
     >
-      <span class="test-header__icon test-header__icon--menu" aria-hidden="true"></span>
-      <span class="test-header__icon test-header__icon--close" aria-hidden="true"></span>
+      <span class="test-header__burger" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+      <span class="test-header__close" aria-hidden="true"></span>
     </button>
 
     <a class="test-header__logo" href="{{ routes.root_url }}">
@@ -38,33 +41,49 @@
     {% endif %}
 
     {% if section.settings.choose_gift_label != blank %}
-      <a class="test-header__choose-gift test-header__choose-gift--desktop test-btn test-btn--yellow" href="{{ section.settings.choose_gift_link }}">
+      <a
+        class="test-header__choose-gift test-header__choose-gift--desktop test-btn test-btn--yellow"
+        href="{{ section.settings.choose_gift_link }}"
+      >
         <span>{{ section.settings.choose_gift_label }}</span>
         <span class="test-btn__arrow" aria-hidden="true"></span>
       </a>
     {% endif %}
   </div>
 
-  <div
-    class="test-header__panel"
-    id="test-header-panel-{{ section.id }}"
-    data-test-header-panel
-    hidden
-  >
+  <div class="test-header__panel" id="test-header-panel-{{ section.id }}" data-test-header-panel>
     {% if section.settings.announcement != blank %}
-      <p class="test-header__announcement test-header__announcement--mobile">
-        {{ section.settings.announcement }}
-      </p>
+      <p class="test-header__panel-text">{{ section.settings.announcement }}</p>
     {% endif %}
 
     {% if section.settings.choose_gift_label != blank %}
-      <a class="test-header__choose-gift test-header__choose-gift--mobile test-btn test-btn--yellow" href="{{ section.settings.choose_gift_link }}">
+      <a
+        class="test-header__choose-gift test-header__choose-gift--mobile test-btn test-btn--yellow"
+        href="{{ section.settings.choose_gift_link }}"
+      >
         <span>{{ section.settings.choose_gift_label }}</span>
         <span class="test-btn__arrow" aria-hidden="true"></span>
       </a>
     {% endif %}
   </div>
 </header>
+
+<script>
+  (function () {
+    var header = document.getElementById('test-header-{{ section.id }}');
+    if (!header || header.dataset.bound === 'true') return;
+    header.dataset.bound = 'true';
+
+    var toggle = header.querySelector('[data-test-header-toggle]');
+    if (!toggle) return;
+
+    toggle.addEventListener('click', function () {
+      var open = header.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+  })();
+</script>
 
 {% schema %}
 {
