@@ -694,7 +694,7 @@
 }
 
 .test-popup__color-swatch {
-  width: 4px;
+  width: 5px;
   align-self: stretch;
   flex-shrink: 0;
   background: var(--swatch, #000);
