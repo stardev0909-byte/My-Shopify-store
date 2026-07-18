@@ -1,0 +1,43 @@
+<div class="test-hero__description-wrap" {{ block.shopify_attributes }}>
+  {% if block.settings.text_desktop != blank %}
+    <p class="test-hero__description test-hero__description--desktop">
+      {{ block.settings.text_desktop }}
+    </p>
+  {% endif %}
+
+  {% if block.settings.text_mobile != blank %}
+    <p class="test-hero__description test-hero__description--mobile">
+      {{ block.settings.text_mobile }}
+    </p>
+  {% elsif block.settings.text_desktop != blank %}
+    <p class="test-hero__description test-hero__description--mobile">
+      {{ block.settings.text_desktop }}
+    </p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Description",
+  "tag": null,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text_desktop",
+      "label": "Description (desktop)",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+    },
+    {
+      "type": "textarea",
+      "id": "text_mobile",
+      "label": "Description (mobile)",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Description"
+    }
+  ]
+}
+{% endschema %}
