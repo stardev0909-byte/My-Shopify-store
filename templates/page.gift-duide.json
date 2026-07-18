@@ -6,57 +6,90 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
-    "main": {
-      "type": "main-page",
+    "test_header": {
+      "type": "TEST-HEADER",
+      "settings": {
+        "logo_text": "TISSO VISON",
+        "announcement": "Find the ideal gift for your loved ones.",
+        "choose_gift_label": "CHOOSE GIFT"
+      }
+    },
+    "test_hero": {
+      "type": "TEST-HERO",
+      "settings": {
+        "heading": "The Gift Guide",
+        "description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "description_mobile": "Discover Joy: Your Ultimate Holiday Gift Destination.",
+        "shop_now_label": "SHOP NOW",
+        "strip_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
+        "strip_text_mobile": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+      }
+    },
+    "test_vison": {
+      "type": "TEST-VISON",
       "blocks": {
-        "heading": {
-          "type": "text",
-          "name": "Title",
+        "product_1": {
+          "type": "product",
           "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "hotspot_top": 54,
+            "hotspot_left": 59
+          }
         },
-        "page-content": {
-          "type": "page-content",
-          "settings": {},
-          "blocks": {}
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "hotspot_top": 50,
+            "hotspot_left": 82
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "hotspot_top": 18,
+            "hotspot_left": 60
+          }
+        },
+        "product_4": {
+          "type": "product",
+          "settings": {
+            "hotspot_top": 16,
+            "hotspot_left": 70
+          }
+        },
+        "product_5": {
+          "type": "product",
+          "settings": {
+            "hotspot_top": 23,
+            "hotspot_left": 49
+          }
+        },
+        "product_6": {
+          "type": "product",
+          "settings": {
+            "hotspot_top": 37,
+            "hotspot_left": 74
+          }
         }
       },
       "block_order": [
-        "heading",
-        "page-content"
+        "product_1",
+        "product_2",
+        "product_3",
+        "product_4",
+        "product_5",
+        "product_6"
       ],
       "settings": {
-        "content_direction": "column",
-        "gap": 32,
-        "color_scheme": "",
-        "padding-block-start": 40,
-        "padding-block-end": 80
+        "heading": "Tisso vison in the wild"
       }
     }
   },
   "order": [
-    "main"
+    "test_header",
+    "test_hero",
+    "test_vison"
   ]
 }
