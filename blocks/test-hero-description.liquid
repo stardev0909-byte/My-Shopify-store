@@ -5,13 +5,11 @@
     </p>
   {% endif %}
 
-  {% if block.settings.text_mobile != blank %}
+  {% assign mobile_text = block.settings.text_mobile | default: block.settings.text_desktop %}
+
+  {% if mobile_text != blank %}
     <p class="test-hero__description test-hero__description--mobile">
-      {{ block.settings.text_mobile }}
-    </p>
-  {% elsif block.settings.text_desktop != blank %}
-    <p class="test-hero__description test-hero__description--mobile">
-      {{ block.settings.text_desktop }}
+        {{ mobile_text }}
     </p>
   {% endif %}
 </div>
@@ -25,13 +23,11 @@
       "type": "textarea",
       "id": "text_desktop",
       "label": "Description (desktop)",
-      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
     },
     {
       "type": "textarea",
       "id": "text_mobile",
       "label": "Description (mobile)",
-      "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
     }
   ],
   "presets": [
