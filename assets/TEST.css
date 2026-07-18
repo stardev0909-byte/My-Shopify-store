@@ -114,8 +114,8 @@
 }
 
 .test-header__announcement--desktop,
-.test-header__choose-gift--desktop {
-  display: none;
+.test-header a.test-header__choose-gift--desktop {
+  display: none !important;
 }
 
 .test-header__panel {
@@ -180,8 +180,8 @@
     flex: 1;
   }
 
-  .test-header__choose-gift--desktop {
-    display: inline-flex;
+  .test-header a.test-header__choose-gift--desktop {
+    display: inline-flex !important;
     flex-shrink: 0;
   }
 }
