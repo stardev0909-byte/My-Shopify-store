@@ -59,7 +59,12 @@
         data-product-handle="{{ product.handle }}"
         aria-label="Quick view {{ product.title }}"
       >
-        <span aria-hidden="true">+</span>
+        <span aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M4.98047 0.75V9.21154" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+            <path d="M0.75 4.98071H9.21154" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+          </svg>
+        </span>
       </button>
     </div>
   {% else %}
