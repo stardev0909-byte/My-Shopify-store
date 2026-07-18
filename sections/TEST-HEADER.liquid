@@ -1,32 +1,69 @@
 {{ 'TEST.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'TEST.js' | asset_url }}" defer></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
 
-<header class="test-header" id="test-header-{{ section.id }}">
-  <a class="test-header__logo" href="{{ routes.root_url }}">
-    {% if section.settings.logo != blank %}
-      {{
-        section.settings.logo
-        | image_url: width: 320
-        | image_tag: loading: 'eager', widths: '160, 240, 320', alt: shop.name
-      }}
-    {% else %}
-      <span class="test-header__logo-text">{{ section.settings.logo_text }}</span>
-    {% endif %}
-  </a>
+<header class="test-header" id="test-header-{{ section.id }}" data-test-header>
+  <div class="test-header__bar">
+    <button
+      type="button"
+      class="test-header__toggle"
+      data-test-header-toggle
+      aria-expanded="false"
+      aria-controls="test-header-panel-{{ section.id }}"
+      aria-label="Open menu"
+    >
+      <span class="test-header__icon test-header__icon--menu" aria-hidden="true"></span>
+      <span class="test-header__icon test-header__icon--close" aria-hidden="true"></span>
+    </button>
 
-  {% if section.settings.announcement != blank %}
-    <p class="test-header__announcement">{{ section.settings.announcement }}</p>
-  {% endif %}
-
-  {% if section.settings.choose_gift_label != blank %}
-    <a class="test-header__choose-gift test-btn test-btn--yellow" href="{{ section.settings.choose_gift_link }}">
-      <span>{{ section.settings.choose_gift_label }}</span>
-      <span class="test-btn__arrow" aria-hidden="true"></span>
+    <a class="test-header__logo" href="{{ routes.root_url }}">
+      {% if section.settings.logo != blank %}
+        {{
+          section.settings.logo
+          | image_url: width: 320
+          | image_tag: loading: 'eager', widths: '160, 240, 320', alt: shop.name
+        }}
+      {% else %}
+        <span class="test-header__logo-text">{{ section.settings.logo_text }}</span>
+      {% endif %}
     </a>
-  {% endif %}
+
+    {% if section.settings.announcement != blank %}
+      <p class="test-header__announcement test-header__announcement--desktop">
+        {{ section.settings.announcement }}
+      </p>
+    {% endif %}
+
+    {% if section.settings.choose_gift_label != blank %}
+      <a class="test-header__choose-gift test-header__choose-gift--desktop test-btn test-btn--yellow" href="{{ section.settings.choose_gift_link }}">
+        <span>{{ section.settings.choose_gift_label }}</span>
+        <span class="test-btn__arrow" aria-hidden="true"></span>
+      </a>
+    {% endif %}
+  </div>
+
+  <div
+    class="test-header__panel"
+    id="test-header-panel-{{ section.id }}"
+    data-test-header-panel
+    hidden
+  >
+    {% if section.settings.announcement != blank %}
+      <p class="test-header__announcement test-header__announcement--mobile">
+        {{ section.settings.announcement }}
+      </p>
+    {% endif %}
+
+    {% if section.settings.choose_gift_label != blank %}
+      <a class="test-header__choose-gift test-header__choose-gift--mobile test-btn test-btn--yellow" href="{{ section.settings.choose_gift_link }}">
+        <span>{{ section.settings.choose_gift_label }}</span>
+        <span class="test-btn__arrow" aria-hidden="true"></span>
+      </a>
+    {% endif %}
+  </div>
 </header>
 
 {% schema %}
