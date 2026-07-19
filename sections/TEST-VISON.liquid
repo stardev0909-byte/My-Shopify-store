@@ -8,7 +8,7 @@
 <test-vison-grid
   class="test-vison"
   id="test-vison-{{ section.id }}"
-  data-money-format="{{ shop.money_format | escape }}"
+    data-money-format="{{amount_with_comma_separator}}€"
 >
   {% if section.settings.heading != blank %}
     <h2 class="test-vison__heading">{{ section.settings.heading }}</h2>
