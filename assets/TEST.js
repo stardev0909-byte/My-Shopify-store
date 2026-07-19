@@ -2,11 +2,17 @@
   const SOFT_WINTER_JACKET = 'Soft Winter Jacket';
 
   function money(cents, moneyFormat) {
-    const amount = (Number(cents) / 100).toFixed(2);
-    if (!moneyFormat) return amount;
+    const value = Number(cents) / 100;
+    const amount = value.toFixed(2);
+    const amountWithComma = amount.replace('.', ',');
+    const amountNoDecimals = String(Math.round(value));
+
+    if (!moneyFormat) return amountWithComma + '€';
+
     return moneyFormat
-      .replace(/\{\{\s*amount\s*\}\}/, amount)
-      .replace(/\{\{\s*amount_no_decimals\s*\}\}/, String(Math.round(Number(cents) / 100)));
+      .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/, amountWithComma)
+      .replace(/\{\{\s*amount_no_decimals\s*\}\}/, amountNoDecimals)
+      .replace(/\{\{\s*amount\s*\}\}/, amount);
   }
 
   function stripHtml(html) {
